@@ -131,12 +131,8 @@
   }
 
   async function toggleReplay () {
-    const data = await sendCommand('ToggleReplayBuffer')
-    console.debug('ToggleReplayBuffer', data.outputActive)
-    if (data.outputActive === undefined) {
-      replayError = 'Replay buffer is not enabled.'
-      setTimeout(function () { replayError = '' }, 5000)
-    } else isReplaying = data.outputActive
+    const data = await sendCommand('SetSceneItemTransform', {sceneName: 'Scene', sceneItemId: 11, sceneItemTransform: {"positionX": 50,"positionY": 331}})
+    console.debug('SetSceneItemTransform', data.sceneItemTransform)
   }
 
   async function switchSceneView () {
