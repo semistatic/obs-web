@@ -131,8 +131,8 @@
   }
 
   async function toggleReplay () {
-    const data = await sendCommand('SetSceneItemTransform', {sceneName: 'Scene', sceneItemId: 11, sceneItemTransform: {"positionX": 50,"positionY": 331}})
-    console.debug('SetSceneItemTransform', data.sceneItemTransform)
+    const data = await sendCommand('GetSceneItemList', {sceneName: 'Scene'})
+    console.debug('GetSceneItemList', data)
   }
 
   async function switchSceneView () {
