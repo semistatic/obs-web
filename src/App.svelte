@@ -24,6 +24,7 @@
   import SourceSwitcher from './SourceSwitcher.svelte'
   import ProfileSelect from './ProfileSelect.svelte'
   import SceneCollectionSelect from './SceneCollectionSelect.svelte'
+  import InputSelect from './InputSelect.svelte'
 
   onMount(async () => {
     if ('serviceWorker' in navigator) {
@@ -131,10 +132,15 @@
   }
 
   async function toggleReplay () {
-    const data = await sendCommand('SetSceneItemTransform', {sceneName: 'Scene', sceneItemId: 11, sceneItemTransform: {"positionX": 50,"positionY": 331}})
-    console.debug('SetSceneItemTransform', data.sceneItemTransform)
+   // const data = await sendCommand('SetSceneItemTransform', {sceneName: 'Scene', sceneItemId: 11, sceneItemTransform: {"positionX": 50,"positionY": 331}})
+   // console.debug('SetSceneItemTransform', data.sceneItemTransform)
+      const data = await sendCommand('GetSceneItemList',{sceneName: 'Scene'})
+      console.log(data.sceneItems)
   }
-
+  async function getSceneItemList() {
+    const data = await sendCommand('GetSceneItemList', {sceneName:'Scene'})
+    console.log(data)
+  }
   async function switchSceneView () {
     isSceneOnTop = !isSceneOnTop
   }
@@ -334,7 +340,7 @@
                 <Icon path={isIconMode ? mdiSquareRoundedBadgeOutline : mdiSquareRoundedBadge} />
               </span>
             </button>
-            <button class:is-light={!isReplaying} class:is-danger={replayError} class="button is-link" title="Toggle Replay Buffer" on:click={toggleReplay}>
+            <button class:is-light={!isReplaying} class:is-danger={replayError} class="button is-link" title="Toggle Replay Buffer" on:click={getSceneItemList}>
               <span class="icon">
                 <Icon path={isReplaying ? mdiMotionPlayOutline : mdiMotionPlay} />
               </span>
@@ -375,6 +381,8 @@
         <SourceSwitcher name={scene.sceneName} imageFormat={imageFormat} buttonStyle="screenshot" />
         {/if}
       {/each}
+      <br/>
+      <InputSelect></InputSelect>
     {:else}
       <h1 class="subtitle">
         Welcome to
